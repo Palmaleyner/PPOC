@@ -1,0 +1,147 @@
+{% extends "basegestor.html" %}
+
+
+{% block content %}
+
+
+        
+   
+
+    
+    <div class="container">
+
+        <div class="">
+            <label>Actualizar</label>
+              <form method="POST" action="{{ url_for('visualgestor') }}" class="d-flex" role="search">
+               
+                <button class="delete-btn">
+                    <img id="actualizar" src="{{ url_for('static', filename='img/actualizar.png') }}" alt="">
+                    
+                </button>
+                
+              </form>
+            </div>
+
+
+
+            <table id="tabla-participantes" class="display">
+                <thead>
+                    <tr>
+                        <th>Contactar</th>
+                        <th>Nombre</th>
+                        <th>Turno</th>
+                        <th>genero</th>
+                        <th>Disponibilidad</th>
+                        <th>Asignado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for participante in participantes %}
+                    <tr>
+                        <td>
+                            <a href="https://wa.me/{{ participante.usuario }}" target="_blank">
+                                <img class="imgchat" src="{{ url_for('static', filename='img/whatsapp.png') }}" alt="">
+                            </a>                          
+                        </td>
+                        <td>{{ participante.nombre }}</td>
+                        <td>{{ participante.turno }}</td>
+                        <td>{{ participante.genero }}</td>
+                        <td>{{ participante.disponibilidad }}</td>
+                        <td>{{ "Si" if participante.yaasignado else "No" }}</td>
+                        <td class="tdopcio">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="delete-btn" data-bs-toggle="modal" data-bs-target="#editarModal{{ participante.id }}">
+                                <img src="{{ url_for('static', filename='img/editar.png') }}" alt="">
+                            </button>
+                            
+                            <!-- Modal editar -->
+                            <div class="modal fade" id="editarModal{{ participante.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Editor</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+
+                                    <div class="modal-body">
+                                        <form action="{{ url_for('editar_participante', id=participante.id) }}" method="POST">
+
+                                                <label class="form-label" for="usuario">Número de teléfono:</label>
+                                                <input placeholder="Ingrese número de teléfono" value="{{ participante.usuario }}" class="form-control" type="text" id="usuario" name="usuario" required>
+                                                <span>*El número de télefono es el usuario*</span>
+                                                
+                                        </br>
+                                            
+                                                <label class="form-label" for="nombre">Nombre:</label>
+                                                <input value="{{ participante.nombre }}" class="form-control" type="text" id="nombre" name="nombre" required><br>
+                                                                       
+
+                                                <label class="form-label" for="turno">Turno:</label>
+                                                <select id="turno" name="turno" class="form-select" required aria-label="Default select example">
+                                                  
+                                                    {% for opcion in ['Martes', 'Jueves'] %}
+                                                        <option value="{{ opcion }}" {% if participante.turno == opcion %} selected {% endif %}>{{ opcion }}</option>
+                                                    {% endfor %}
+                                                </select><br>
+
+                                                <label class="form-label" for="genero">genero:</label>
+
+                                                <select value="{{ participante.genero }}" id="genero" name="genero" type="text"  id="genero" name="genero" required class="form-select" aria-label="Default select example">
+                                               
+                                                    {% for opcion in ['Masculino', 'Femenino'] %}
+                                                        <option value="{{ opcion }}" {% if participante.genero == opcion %} selected {% endif %}>{{ opcion }}</option>
+                                                    {% endfor %}
+                                                    
+                                                    
+                                                </select><br>
+
+                                                <label class="form-label" for="disponibilidad">Disponibilidad:</label>
+
+                                                <select value="{{ participante.disponibilidad }}" type="text"  id="disponibilidad" name="disponibilidad" required class="form-select" aria-label="Default select example">   
+                                                    
+                                                    {% for opcion in ['Mañana - Schamann', 'Tarde - Arenales', 'Tarde - Schamann'] %}
+                                                        <option value="{{ opcion }}" {% if participante.disponibilidad == opcion %} selected {% endif %}>{{ opcion }}</option>
+                                                    {% endfor %}                                             
+                                                </select><br>
+                                        
+                                                <div class="form-check form-switch">
+                                                    <input {% if participante.yaasignado %} checked {% endif %} class="form-check-input" type="checkbox" role="switch" id="yaasignado" name="yaasignado" value="1" >
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Asignado</label>
+                                                </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Formulario para eliminar participante -->
+                            <form id="eliminarGestor{{ participante.id }}"  action="{{ url_for('eliminar_participante', id=participante.id) }}" method="post"></form>
+
+                            <button onclick="alerteliminar('{{ participante.id }}')" class="delete-btn" >
+                                <img src="{{ url_for('static', filename='img/borrar.png') }}" alt="">
+                            </button>
+
+
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+
+
+
+
+
+   
+{% endblock %}

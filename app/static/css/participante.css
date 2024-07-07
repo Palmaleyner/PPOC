@@ -1,0 +1,48 @@
+
+.container{
+    max-width: 800px;
+    margin: 50px 50px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+}
+
+#container{
+    display: flex;
+}
+
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+.form-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.form-button:hover {
+    background-color: #45a049;
+}
+
+/* Estilos personalizados para la tabla */
+#tabla-participantes {
+    width: 100%;
+    margin: 20px 0;
+    text-align: center;
+}

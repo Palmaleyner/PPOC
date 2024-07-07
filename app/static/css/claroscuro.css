@@ -1,0 +1,92 @@
+/* Estilos para el tema claro */
+body {
+    background-color: #f8f9fa; /* Color de fondo claro */
+    color: #343a40; /* Color de texto oscuro */
+}
+
+body.dark-mode{
+
+    ::placeholder{
+        color: #f8f9fa;
+    }
+
+    
+   .modal-content{
+        background: #343a40 !important; /* Color de fondo oscuro */
+        span{
+            color: #f8f9fa;
+        }
+   }
+    
+
+   .swal2-popup{
+        background: #343a40 !important; /* Color de fondo oscuro */
+        color: #f8f9fa;
+   }
+
+
+    td, label, select, input, .cuerpo, .container{
+        background: #343a40 !important; /* Color de fondo oscuro */
+        color: #f8f9fa !important;
+        img{
+            filter: invert(100%) sepia(13%) saturate(0%) hue-rotate(133deg) brightness(103%) contrast(105%);
+        }
+        div{
+            
+            color: #f8f9fa !important;
+        }
+    };
+
+    nav{
+        background: #1e2a31 !important;
+        a{
+            color: #f8f9fa !important;
+        }
+
+        .icon{
+            filter: invert(100%) sepia(13%) saturate(0%) hue-rotate(133deg) brightness(103%) contrast(105%);
+        }
+    }
+
+    #tabla-participantes_paginate{
+        a, span{
+            color: #f8f9fa !important;
+        }
+
+        span:hover{
+            color: #000000 !important;
+        }
+
+        .current{
+            color: #000000 !important;
+        }
+    }
+
+
+    
+    .offcanvas {
+        background: #343a40 !important; /* Color de fondo oscuro */
+        color: #f8f9fa !important; /* Color de texto claro */
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    background: #343a40 !important; /* Color de fondo oscuro */
+    color: #f8f9fa !important; /* Color de texto claro */
+}
+
+.btn {
+    background-color: #007bff; /* Color de fondo del botón en tema claro */
+    color: #fff; /* Color de texto del botón en tema claro */
+}
+
+

@@ -1,0 +1,59 @@
+{% extends "baseparticipante.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Calendario de Participantes</h2>
+
+    <div class="calendar">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Martes</th>
+                    <th>Jueves</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dia, turnos in calendario.items() %}
+                    <tr>
+                        <td>
+                            {% if dia == 'Martes' %}
+                                {% for turno, participantes in turnos.items() %}
+                                    <h3>{{ turno }}</h3>
+                                    <ul>
+                                        {% for participante in participantes %}
+                                            <li>
+                                                <strong>Nombre:</strong> {{ participante.nombre }}<br>
+                                                <strong>Género:</strong> {{ participante.genero }}<br>
+                                                <strong>Disponibilidad:</strong> {{ participante.disponibilidad }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if dia == 'Jueves' %}
+                                {% for turno, participantes in turnos.items() %}
+                                    <h3>{{ turno }}</h3>
+                                    <ul>
+                                        {% for participante in participantes %}
+                                            <li>
+                                                <strong>Nombre:</strong> {{ participante.nombre }}<br>
+                                                <strong>Género:</strong> {{ participante.genero }}<br>
+                                                <strong>Disponibilidad:</strong> {{ participante.disponibilidad }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+

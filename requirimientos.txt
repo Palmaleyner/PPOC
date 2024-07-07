@@ -1,0 +1,10 @@
+Flask
+Flask-SQLAlchemy
+pymysql
+reportlab
+Werkzeug
+flask_migrate
+flask-mysqldb
+reportlab
+pdfkit
+

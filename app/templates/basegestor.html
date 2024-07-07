@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}MYPPOC{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/claroscuro.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ url_for('static', filename='js/alertas.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/participante.js') }}"></script>
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+</head>
+<body class="{% if theme == 'dark' %}dark-mode{% endif %}">
+    <header>
+        <nav class="navbar navbar-light bg-light">
+            
+                <div class="container-fluid">
+                    <a class="navbar-brand"href="{{ url_for('visualgestor') }}">MYPPOC</a>
+                    <img class="icon" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" src="{{ url_for('static', filename='img/config.png') }}" alt="">
+
+                    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                        <div class="offcanvas-header">
+                          <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Opciones de desarrollador</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+
+                            <div class="offbody">
+                                <img data-bs-toggle="modal" data-bs-target="#staticBackdropnuevouser" src="{{ url_for('static', filename='img/agregar-usuario.png') }}" alt="">
+                                <h5>Nuevo usuario</h5>
+                            </div>
+                            
+                            <div class="offbody">
+                                <img src="{{ url_for('static', filename='img/whatsapp.png') }}" alt="">
+                                <h5>Grupo whatsapp</h5>
+                            </div>
+
+                            <form id="pdfForm" action="#" method="post">
+                                <div class="offbody">
+                                    <img src="{{ url_for('static', filename='img/pdf-donw.png') }}" alt="">
+                                    <select id="tipoPdf" name="tipo_pdf" class="form-select" aria-label="Default select example">
+                                        <option selected disabled>Descargar</option>
+                                        <option value="general">Descargar PDF general</option>
+                                        <option  value="lista">Descargar PDF de lista</option>
+                                    </select>
+                                </div>
+                            </form>
+
+                            <div class="offbody">
+                                <img data-bs-toggle="modal" data-bs-target="#staticBackdropnuevoadmin" src="{{ url_for('static', filename='img/anadir-grupo.png') }}" alt="">
+                                <h5>Gestor admin</h5>
+                            </div>
+
+                            <div class="offbody">
+                                <a href="{{ url_for('listaparticipantes') }}">
+                                    <img  data-bs-toggle="modal" data-bs-target="#staticBackdropgenerarlista" src="{{ url_for('static', filename='img/lista-de-verificacion.png') }}" alt="">   
+                                </a>
+                                <h5>Nuevo listado</h5>
+                            </div>
+
+                            
+                            
+                        </div>
+                        <div class="offcanvas-footer">
+
+                            <div>
+                                <a onclick="alertsalir()">
+                                    <img src="{{ url_for('static', filename='img/cerrar-sesion.png') }}" alt="">
+                                </a>
+                            </div>
+
+                            <div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="toggle-theme-btn" >
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">Cambiar tema</label>
+                                </div>
+                            </div>
+
+                                
+                        </div>
+                      </div>   
+                </div>
+            
+          </nav>
+    </header>
+
+
+    <!-- Modal nuevo participante -->
+    <div class="modal fade" id="staticBackdropnuevouser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Nuevo participante</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                  <!-- Formulario para agregar participante -->
+                <form action="{{ url_for('agregar_participante') }}" method="POST" class="form">
+                    <label class="form-label" for="usuario">Número de teléfono:</label>
+                    <input placeholder="Ingrese número de teléfono" class="form-control" type="text" id="usuario" name="usuario" required>
+                    <span>*El número de télefono es el usuario*</span>
+
+
+                    
+                
+                    <label class="form-label" for="nombre">Nombre:</label>
+                    <input class="form-control" type="text" id="nombre" name="nombre" required><br>
+
+                                   
+                    <label class="form-label" for="turno">Turno:</label>
+
+                    <select id="turno" name="turno" type="text" required class="form-select" aria-label="Default select example">
+                        <option selected>Seleccione una opción</option>
+                        <option>Martes</option>
+                        <option>Jueves</option>
+                    </select><br>
+
+                    <label class="form-label" for="genero">genero:</label>
+
+                    <select id="genero" name="genero" type="text"  id="genero" name="genero" required class="form-select" aria-label="Default select example">
+                        <option selected>Seleccione una opción</option>
+                        <option>Masculino</option>
+                        <option>Femenino</option>
+                    </select><br>
+
+                    <label class="form-label" for="disponibilidad">Disponibilidad:</label>
+
+                    <select type="text"  id="disponibilidad" name="disponibilidad" required class="form-select" aria-label="Default select example">
+                        <option selected>Seleccione una opción</option>
+                        <option>Mañana - Schamann</option>
+                        <option>Tarde - Arenales</option>
+                        <option>Tarde - Schamann</option>
+                    </select><br>
+            
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="yaasignado" name="yaasignado" value="1">
+                        <label class="form-check-label1" for="flexSwitchCheckChecked">Activo</label>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Agregar Participante</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="content">
+
+    <!-- Modal nuevo admin -->
+    <div class="modal fade" id="staticBackdropnuevoadmin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <h2>Gestores</h2>
+                        <form action="{{ url_for('agregar_gestor') }}" method="post" class="mb-3">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombreadmin" name="nombreadmin" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="clave" class="form-label">Clave</label>
+                                <input type="password" class="form-control" id="claveadmin" name="claveadmin" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Agregar Gestor</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for gestor in gestores %}
+                                <tr>
+                                    <td>{{ gestor.nombre }}</td>
+                                    <td>
+
+                                        <form id="eliminarGestor{{ gestor.id }}"  action="{{ url_for('delete_gestor', id=gestor.id) }}" method="post" style="display:inline;">
+                                            
+                                        </form>
+                                        <button onclick="alerteliminar('{{ gestor.id }}')" class="btn btn-danger">Eliminar</button>
+                                        
+
+
+
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal generar nueva listado -->
+
+
+
+    
+
+
+
+            {% block content %}
+                     
+            {% endblock %}
+        
+
+        <footer>
+            <p>MYPPOC By Enlebel - © 2024</p>
+        </footer>
+    </body>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+  
+
+</html>

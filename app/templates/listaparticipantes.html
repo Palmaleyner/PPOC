@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/participante.css') }}">
+
+{% extends "basegestor.html" %}
+
+{% block content %}
+
+
+
+    <div class="container">
+
+        <div class="opcion">
+            
+            <button type="button" class="delete-btn" onclick="confirmarEliminarTodo()">
+                <img src="{{ url_for('static', filename='img/borrar.png') }}" alt="">
+            </button>
+            
+            <button onclick="guardarRegistro()" class="delete-btn">
+                <img src="{{ url_for('static', filename='img/guardar.png') }}" alt="">
+            </button>
+        </div>
+
+
+        <h1>Formación de Grupos</h1>
+        
+        <!-- Botón para ejecutar la función y mostrar los grupos -->
+        <div class="button-container">
+            <form action="{{ url_for('listaparticipantes') }}" method="POST">
+                <button class="form-button" type="submit">Formar Grupos</button>
+            </form>
+        </div>
+
+        
+
+        
+
+        <!-- Tabla para mostrar los grupos formados -->
+        <form id="form-guardar-registro" action="{{ url_for('guardar_registro') }}" method="POST">
+            <input type="hidden" name="participantemes_data" id="participantemes-data">
+            
+            <table id="tabla-participantes" class="display">
+                <thead>
+                    <tr>
+                        <th>Turno</th>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Género</th>
+                        <th>Disponibilidad</th>   
+                        <th>Grupos</th>                  
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grupo in grupos %}
+                        {% for participantemes in grupo['grupo'] %}
+                        <tr>
+                            <td><input type="text" name="turno[]" value="{{ participantemes[2] }}"></td>
+                            <td><input type="text" name="fecha[]" value="{{ grupo['fecha'] }}"></td>
+                            <td><input type="text" name="nombre[]" value="{{ participantemes[0] }}"></td>
+                            <td><input type="text" name="genero[]" value="{{ participantemes[1] }}"></td>
+                            <td><input type="text" name="disponibilidad[]" value="{{ participantemes[3] }}"></td>
+                            <td><input type="text" name="grupo[]" value="{{ grupo['letra'] }}"></td>
+                        </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+
+        <form id="form-eliminar-todo" action="{{ url_for('eliminar_todo_participames') }}" method="POST" style="display:inline;">  
+        </form>
+    
+    </div>
+
+
+    
+
+    
+    
+
+
+
+{% endblock %}

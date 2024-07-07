@@ -1,0 +1,50 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.nav-tabs .nav-link {
+    color: #007bff;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.tab-content {
+    padding-top: 20px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-link {
+    color: #007bff;
+}
+
+.container{
+
+    margin-top: 50px;
+}
+
+.containertext{
+    margin-top: 140px;
+    display: flex;
+    justify-content: space-around;
+}
